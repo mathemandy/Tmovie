@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Tmovie</string>
+    <string name="error_message">Can\'t Reach HollyWood, Right Now!</string>
+    <string name="error_message_2">make Sure that Wi-Fi or cellular mobile data is turned on and try again.</string>
+    <string name="error_retry">Retry</string>
+    <string name="SortOrder">Sort By</string>
+
+
+    <!-- Image setting -->
+
+    <string name="pref_sort_by_value_popular" translatable="false">popularity.desc</string>
+    <string name="pref_sort_by_value_rated" translatable="false">vote_average.desc</string>
+
+
+    <array name="spinner_list_item_array">
+        <item> Popular</item>
+        <item> Top Rated </item>
+    </array>
+</resources>
