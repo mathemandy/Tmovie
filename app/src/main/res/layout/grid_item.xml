@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width= "@dimen/list_item_card_width"
     android:layout_height="@dimen/list_item_card_height"
     android:foreground="?android:attr/selectableItemBackground"
@@ -24,7 +25,8 @@
         android:layout_width="185dp"
         android:layout_height="278dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/oldest_movie" />
+        android:src="@drawable/oldest_movie"
+        tools:ignore="ContentDescription" />
 
 
 

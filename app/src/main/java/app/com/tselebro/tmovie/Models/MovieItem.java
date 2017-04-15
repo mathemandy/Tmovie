@@ -56,12 +56,11 @@ public class MovieItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-  ;
         parcel.writeString(posterPath);
         parcel.writeString(overview);
         parcel.writeString(releaseDate);
         parcel.writeString(backdropPath);
-        parcel.writeString(title);;
+        parcel.writeString(title);
         parcel.writeInt(userRating);
     }
 

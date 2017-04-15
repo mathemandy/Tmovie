@@ -13,32 +13,27 @@ import java.util.Scanner;
 import static app.com.tselebro.tmovie.BuildConfig.MY_MOVIEDB_API_KEY;
 
 /**
+ * Code Adapted from Project work on Udacity Android FastTrack Course
+ *
  * These utilities will be used to communicate with the MovieDB servers.
  */
 public final class NetworkUtils {
 
     private static final String TAG = NetworkUtils.class.getSimpleName();
 
-    private static final String DYNAMIC_WEATHER_URL =
-            "http://api.themoviedb.org/3/discover/movie?";
+    private static final String FORECAST_BASE_URL = Constants.BASE_URL;
 
-    private static final String FORECAST_BASE_URL = DYNAMIC_WEATHER_URL;
-
-
-
-
-    final static String QUERY_PARAM = "sort_by";
-    final static String APPID_PARAM = "api_key";
+    private final static String APP_ID_PARAM = "api_key";
 
     /**
-     * Builds the URL used to talk to the MovieDb Server server using sortorder as our query. This location is based
-     * @param sortOrder The sortorder that will be queried for to display our movies.
+     * Builds the URL used to talk to the MovieDb Server server using sortOrder as our query.
+     * @param sortOrder The sortOrder that will be queried for to display our movies.
      * @return The URL to use to query the MovieDb server.
      */
     public static URL buildUrl(String sortOrder) {
         Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon()
-                .appendQueryParameter(QUERY_PARAM, sortOrder)
-                .appendQueryParameter(APPID_PARAM, MY_MOVIEDB_API_KEY)
+                .appendEncodedPath(sortOrder)
+                .appendQueryParameter(APP_ID_PARAM, MY_MOVIEDB_API_KEY)
                 .build();
 
         URL url = null;

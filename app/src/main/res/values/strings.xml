@@ -1,15 +1,15 @@
 <resources>
-    <string name="app_name">Tmovie</string>
+    <string name="app_name">T Movies</string>
     <string name="error_message">Can\'t Reach HollyWood, Right Now!</string>
     <string name="error_message_2">make Sure that Wi-Fi or cellular mobile data is turned on and try again.</string>
     <string name="error_retry">Retry</string>
     <string name="SortOrder">Sort By</string>
-
-
+    <string name="demo_text">Lorem ipsum dolor sit amet, qui facilisi mandamus qualisque ut, zril salutandi mel eu. Simul prompta sed ut.</string>
+    <string name="demo_text1">Quo usque tandem abutere, Catilina, patientia nostra? quam diu etiam furor iste tuus nos eludet?</string>
+    <string name="pref_sort_by_value_popular">popularity</string>
+    <string name="pref_sort_by_value_rated">top_rated</string>
     <!-- Image setting -->
 
-    <string name="pref_sort_by_value_popular" translatable="false">popularity.desc</string>
-    <string name="pref_sort_by_value_rated" translatable="false">vote_average.desc</string>
 
 
     <array name="spinner_list_item_array">

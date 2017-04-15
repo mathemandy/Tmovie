@@ -10,6 +10,7 @@
         android:id="@+id/recyclerView_movies"
         android:layout_width="match_parent"
         android:paddingLeft="40dp"
+        android:paddingRight="40dp"
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
@@ -26,11 +27,11 @@
             android:layout_width="wrap_content"
             android:padding="@dimen/activity_vertical_margin"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_videocam_off_black_48dp"
+            android:src="@drawable/ic_video_cam_off_black_48dp"
             android:layout_gravity="center"
-            />
+            tools:ignore="ContentDescription" />
         <TextView
-            android:id="@+id/tv_erro_text"
+            android:id="@+id/tv_error_text_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/error_message"
@@ -58,8 +59,6 @@
             android:layout_height="wrap_content"
             android:textSize="16sp"
             android:text="@string/error_retry"
-            android:onClick="refresh()"
-
             android:padding="@dimen/activity_vertical_margin"
 
             />
