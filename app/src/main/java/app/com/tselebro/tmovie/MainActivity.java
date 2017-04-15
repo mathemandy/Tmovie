@@ -2,6 +2,7 @@ package app.com.tselebro.tmovie;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -52,10 +53,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         Button retry = (Button) findViewById(R.id.btn_retry);
 
 
-        int spanCount = 2;
-        GridLayoutManager layoutManager
-                = new GridLayoutManager(this, spanCount);
-        mRecyclerView.setLayoutManager(layoutManager);
+        if(getApplication().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+        else{
+            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        }
+
 
         mRecyclerView.setHasFixedSize(true);
         mMovieAdapter = new MovieAdapter(this, this);

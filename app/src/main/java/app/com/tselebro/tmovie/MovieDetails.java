@@ -1,5 +1,6 @@
 package app.com.tselebro.tmovie;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -35,9 +36,17 @@ public class MovieDetails extends AppCompatActivity{
         setContentView(R.layout.activity_details);
 
 
+
                 Bundle bundle = getIntent().getExtras();
+
+        if (bundle != null){
+            if (bundle.containsKey("movie")){
                 movieItem = bundle.getParcelable("movie");
                 init_views();
+            }
+        }
+
+
 
     }
 
