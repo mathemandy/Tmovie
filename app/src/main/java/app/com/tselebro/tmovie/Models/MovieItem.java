@@ -9,7 +9,7 @@ import android.os.Parcelable;
 public class MovieItem implements Parcelable {
 
 
-
+    private int movieId;
     private String posterPath;
     private String overview;
     private String releaseDate;
@@ -17,7 +17,8 @@ public class MovieItem implements Parcelable {
     private String title;
     private int userRating;
 
-    public MovieItem(String posterPath, String overview, String releaseDate, String backdropPath, String title, int userRating) {
+    public MovieItem(int id, String posterPath, String overview, String releaseDate, String backdropPath, String title, int userRating) {
+        this.movieId = id;
         this.posterPath = posterPath;
         this.overview = overview;
         this.releaseDate = releaseDate;
@@ -27,7 +28,7 @@ public class MovieItem implements Parcelable {
     }
 
     protected MovieItem(Parcel in) {
-
+        movieId = in.readInt();
         posterPath = in.readString();
         overview = in.readString();
         releaseDate = in.readString();
@@ -56,6 +57,7 @@ public class MovieItem implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(movieId);
         parcel.writeString(posterPath);
         parcel.writeString(overview);
         parcel.writeString(releaseDate);
@@ -69,47 +71,33 @@ public class MovieItem implements Parcelable {
         return posterPath;
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
-    }
 
     public String getOverview() {
         return overview;
     }
 
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
 
     public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
 
     public String getBackdropPath() {
         return backdropPath;
     }
 
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public int getUserRating() {
         return userRating;
     }
 
-    public void setUserRating(int userRating) {
-        this.userRating = userRating;
+    public int getMovieId() {
+        return movieId;
     }
 }
+

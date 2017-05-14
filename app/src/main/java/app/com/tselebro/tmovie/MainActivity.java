@@ -3,75 +3,79 @@ package app.com.tselebro.tmovie;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import app.com.tselebro.tmovie.Adapter.MovieAdapter;
 import app.com.tselebro.tmovie.Models.MovieItem;
+import app.com.tselebro.tmovie.databinding.ActivityMainBinding;
 import app.com.tselebro.tmovie.utilities.Constants;
-import app.com.tselebro.tmovie.utilities.MovieWeatherJsonUtils;
+import app.com.tselebro.tmovie.utilities.MovieJsonUtils;
 import app.com.tselebro.tmovie.utilities.NetworkUtils;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler {
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<List<MovieItem>> {
+
+    private static final String BUNDLE_RECYCLER_LAYOUT = "recycler";
+    private MovieItem mMovieItem;
+    private static final int MOVIE_LOADER_ID = 0;
 
     /*
     * Code Adapted from Project work on Udacity's Android FastTrack Course
     * */
 
     private String mSortOrder;
-    private LinearLayout mContainer;
-    private RecyclerView mRecyclerView;
-    private ProgressBar mLoadingIndicator;
     private MovieAdapter mMovieAdapter;
-
+    ActivityMainBinding mBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mContainer = (LinearLayout) findViewById(R.id.recycler_container);
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView_movies);
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
-        Button retry = (Button) findViewById(R.id.btn_retry);
-
-
-        if(getApplication().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
-            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-        }
-        else{
-            mRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        }
-
-
-        mRecyclerView.setHasFixedSize(true);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mMovieAdapter = new MovieAdapter(this, this);
-        mRecyclerView.setAdapter(mMovieAdapter);
 
-        retry.setOnClickListener(new View.OnClickListener() {
+        if (getApplication().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            mBinding.recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 2));
+        } else {
+            mBinding.recyclerViewMovies.setLayoutManager(new GridLayoutManager(this, 4));
+        }
+
+        mBinding.recyclerViewMovies.setHasFixedSize(true);
+
+        mBinding.recyclerViewMovies.setAdapter(mMovieAdapter);
+
+        mBinding.errorInfo.btnRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loadMovieData(mSortOrder);
+                getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null,MainActivity.this);
             }
         });
 
+        int loaderId = MOVIE_LOADER_ID;
+
+        LoaderManager.LoaderCallbacks<List<MovieItem>> callback = MainActivity.this;
+        Bundle bundleForLoader = null;
+        getSupportLoaderManager().initLoader(loaderId, bundleForLoader, callback);
 
     }
 
@@ -86,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         startActivity(intentToStartActivity);
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -108,11 +113,14 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 switch (i) {
                     case 0:
                         queryType = Constants.POPULAR_MOVIE_URL;
-                        loadMovieData(queryType);
+                        mSortOrder = queryType;
+                        invalidateData();
+                        getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null,MainActivity.this);
                         break;
                     case 1:
                         queryType = Constants.TOP_RATED_URL;
-                        loadMovieData(queryType);
+                        mSortOrder = queryType;
+                        getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null,MainActivity.this);
                         break;
                 }
             }
@@ -128,67 +136,76 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     }
 
-    private void loadMovieData(String sortOrder) {
-        mSortOrder = sortOrder;
-        showMovieDataView();
-        new FetchMoviePosterTask().execute(mSortOrder);
-
-    }
 
     private void showMovieDataView() {
-        mContainer.setVisibility(View.INVISIBLE);
-        mRecyclerView.setVisibility(View.VISIBLE);
+        mBinding.errorInfo.errorTest.setVisibility(View.INVISIBLE);
+        mBinding.recyclerViewMovies.setVisibility(View.VISIBLE);
     }
 
     private void showErrorMessage() {
-        mRecyclerView.setVisibility(View.INVISIBLE);
-        mContainer.setVisibility(View.VISIBLE);
+        mBinding.recyclerViewMovies.setVisibility(View.INVISIBLE);
+        mBinding.errorInfo.errorTest.setVisibility(View.VISIBLE);
     }
 
-    private class FetchMoviePosterTask extends AsyncTask<String, Void, List<MovieItem>> {
+    @Override
+    public Loader<List<MovieItem>> onCreateLoader(int id, Bundle args) {
+        return new AsyncTaskLoader<List<MovieItem>>(this) {
 
+            @Override
+            public List<MovieItem> loadInBackground() {
+                URL movieUrl = NetworkUtils.buildMovieUrl(mSortOrder);
 
-        @Override
-        protected List<MovieItem> doInBackground(String... strings) {
-
-            if (strings.length == 0) {
-                return null;
+                try {
+                    String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieUrl);
+                    List<MovieItem> movieItem = MovieJsonUtils.getSimpleMovieStringsFromJson(jsonMovieResponse);
+                    return movieItem;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return null;
+                }
             }
 
-            String sortOrder = strings[0];
-            URL movieRequestUrl = NetworkUtils.buildUrl(sortOrder);
+            List<MovieItem> mMovie = null;
 
-            try {
-                String jsonMovieResponse = NetworkUtils
-                        .getResponseFromHttpUrl(movieRequestUrl);
-
-                return MovieWeatherJsonUtils
-                        .getSimpleMovieStringsFromJson(jsonMovieResponse);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
+            @Override
+            protected void onStartLoading() {
+                if (mMovie != null) {
+                    deliverResult(mMovie);
+                } else {
+                    mBinding.pbLoadingIndicator.setVisibility(View.VISIBLE);
+                    forceLoad();
+                }
             }
 
-        }
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mLoadingIndicator.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected void onPostExecute(List<MovieItem> movieItems) {
-            mLoadingIndicator.setVisibility(View.INVISIBLE);
-            if (movieItems != null) {
-                showMovieDataView();
-                mMovieAdapter.setMovieData(movieItems);
-            } else {
-                showErrorMessage();
+            public void deliverResult(List<MovieItem> data) {
+                mMovie = data;
+                super.deliverResult(data);
             }
+        };
+    }
+
+
+    @Override
+    public void onLoadFinished(Loader<List<MovieItem>> loader, List<MovieItem> data) {
+        mBinding.pbLoadingIndicator.setVisibility(View.INVISIBLE);
+        mMovieAdapter.setMovieData(data);
+        if (data != null) {
+            showMovieDataView();
+
+        } else {
+            showErrorMessage();
         }
     }
 
+
+    @Override
+    public void onLoaderReset(Loader<List<MovieItem>> loader) {
+
+    }
+
+    private void invalidateData() {
+        mMovieAdapter.setMovieData(null);
+    }
 
 }
+

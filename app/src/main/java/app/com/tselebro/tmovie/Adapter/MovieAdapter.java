@@ -26,6 +26,7 @@ public class MovieAdapter  extends RecyclerView.Adapter<MovieAdapter.MovieAdapte
 
     private final Context mContext;
 
+
     /**
      * The interface that receives onClick messages.
      */

@@ -8,12 +8,20 @@
     <string name="demo_text1">Quo usque tandem abutere, Catilina, patientia nostra? quam diu etiam furor iste tuus nos eludet?</string>
     <string name="pref_sort_by_value_popular">popularity</string>
     <string name="pref_sort_by_value_rated">top_rated</string>
+    <string name="movie_title">The Furious 8</string>
+    <string name="trailer_type">Clip</string>
+    <string name="trailer_name">Mickey Short</string>
+    <string name="demo_url">www.dailymotionPictures.com</string>
+    <string name="demo_content">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+    <string name="backdropHeight">256dp</string>
     <!-- Image setting -->
 
 
-
     <array name="spinner_list_item_array">
-        <item> Popular</item>
-        <item> Top Rated </item>
+        <item>Popular</item>
+        <item>Top Rated</item>
     </array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
