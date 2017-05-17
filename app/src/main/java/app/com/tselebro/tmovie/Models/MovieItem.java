@@ -17,7 +17,10 @@ public class MovieItem implements Parcelable {
     private String title;
     private int userRating;
 
-    public MovieItem(int id, String posterPath, String overview, String releaseDate, String backdropPath, String title, int userRating) {
+
+    public MovieItem(int id, String posterPath,
+                     String overview, String releaseDate, String backdropPath,
+                     String title, int userRating) {
         this.movieId = id;
         this.posterPath = posterPath;
         this.overview = overview;
@@ -64,6 +67,7 @@ public class MovieItem implements Parcelable {
         parcel.writeString(backdropPath);
         parcel.writeString(title);
         parcel.writeInt(userRating);
+
     }
 
 
@@ -99,5 +103,8 @@ public class MovieItem implements Parcelable {
     public int getMovieId() {
         return movieId;
     }
+
 }
+
+
 

@@ -44,8 +44,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/review_author_textView"
         app:layout_constraintTop_toBottomOf="@+id/review_author_textView"
         tools:text="@string/demo_url"
-        android:layout_marginRight="0dp"
-        app:layout_constraintRight_toRightOf="@+id/review_author_textView"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0" />
 
     <TextView

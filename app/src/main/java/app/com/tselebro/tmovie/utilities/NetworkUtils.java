@@ -1,9 +1,8 @@
 package app.com.tselebro.tmovie.utilities;
 
 
-import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -12,7 +11,10 @@ import java.net.URL;
 import java.util.Scanner;
 
 import static app.com.tselebro.tmovie.BuildConfig.MY_MOVIEDB_API_KEY;
-import static app.com.tselebro.tmovie.utilities.Constants.*;
+import static app.com.tselebro.tmovie.utilities.Constants.APP_ID_PARAM;
+import static app.com.tselebro.tmovie.utilities.Constants.BASE_URL;
+import static app.com.tselebro.tmovie.utilities.Constants.REVIEW_KEY;
+import static app.com.tselebro.tmovie.utilities.Constants.TRAILER_KEY;
 
 /**
  * Code Adapted from Project work on Udacity Android FastTrack Course

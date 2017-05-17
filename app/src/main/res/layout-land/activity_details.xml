@@ -138,29 +138,13 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_gravity="bottom"
-        app:tabMode="scrollable"
+        app:tabMode="fixed"
         app:layout_anchor="@+id/appbar"
         app:layout_anchorGravity="bottom"
         android:background="@color/colorPrimary"
         app:tabGravity="fill"
         android:layout_height="?attr/actionBarSize" >
 
-
-        <android.support.design.widget.TabItem
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="Trailers"
-            />
-        <android.support.design.widget.TabItem
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="Trailers"
-            />
-        <android.support.design.widget.TabItem
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:text="Trailers"
-            />
     </android.support.design.widget.TabLayout>
 
     <android.support.design.widget.AppBarLayout
@@ -173,7 +157,7 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="@string/backdropHeight"
+            android:layout_height="@dimen/detail_backdrop_height"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
@@ -188,6 +172,13 @@
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"/>
 
+            <ProgressBar
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:progressTint="@color/colorPrimary"
+                android:id="@+id/pb_loading_indicator"
+                />
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"

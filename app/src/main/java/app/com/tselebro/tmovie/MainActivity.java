@@ -2,10 +2,12 @@ package app.com.tselebro.tmovie;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -35,14 +37,14 @@ import app.com.tselebro.tmovie.utilities.NetworkUtils;
 public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieAdapterOnClickHandler, LoaderManager.LoaderCallbacks<List<MovieItem>> {
 
     private static final String BUNDLE_RECYCLER_LAYOUT = "recycler";
-    private MovieItem mMovieItem;
-    private static final int MOVIE_LOADER_ID = 0;
+    private static final int MOVIE_LOADER_ID = 1;
+    SharedPreferences prefs;
+    private List<MovieItem> mMovie;
 
     /*
     * Code Adapted from Project work on Udacity's Android FastTrack Course
     * */
 
-    private String mSortOrder;
     private MovieAdapter mMovieAdapter;
     ActivityMainBinding mBinding;
 
@@ -70,12 +72,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null,MainActivity.this);
             }
         });
-
-        int loaderId = MOVIE_LOADER_ID;
-
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         LoaderManager.LoaderCallbacks<List<MovieItem>> callback = MainActivity.this;
-        Bundle bundleForLoader = null;
-        getSupportLoaderManager().initLoader(loaderId, bundleForLoader, callback);
+        getSupportLoaderManager().initLoader(MOVIE_LOADER_ID, null, callback);
 
     }
 
@@ -113,13 +112,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
                 switch (i) {
                     case 0:
                         queryType = Constants.POPULAR_MOVIE_URL;
-                        mSortOrder = queryType;
-                        invalidateData();
+                        storeSelection(queryType);
                         getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null,MainActivity.this);
                         break;
                     case 1:
                         queryType = Constants.TOP_RATED_URL;
-                        mSortOrder = queryType;
+                        storeSelection(queryType);
                         getSupportLoaderManager().restartLoader(MOVIE_LOADER_ID, null,MainActivity.this);
                         break;
                 }
@@ -153,19 +151,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
             @Override
             public List<MovieItem> loadInBackground() {
+                String mSortOrder = prefs.getString("SORT", "");
                 URL movieUrl = NetworkUtils.buildMovieUrl(mSortOrder);
 
                 try {
                     String jsonMovieResponse = NetworkUtils.getResponseFromHttpUrl(movieUrl);
-                    List<MovieItem> movieItem = MovieJsonUtils.getSimpleMovieStringsFromJson(jsonMovieResponse);
-                    return movieItem;
+                    return MovieJsonUtils.getSimpleMovieStringsFromJson(jsonMovieResponse);
                 } catch (Exception e) {
                     e.printStackTrace();
                     return null;
                 }
             }
 
-            List<MovieItem> mMovie = null;
+
 
             @Override
             protected void onStartLoading() {
@@ -205,6 +203,13 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     private void invalidateData() {
         mMovieAdapter.setMovieData(null);
+    }
+
+    public void storeSelection(String sortOrder){
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("SORT", sortOrder);
+        editor.apply();
     }
 
 }

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import app.com.tselebro.tmovie.Models.MovieItem;
 import app.com.tselebro.tmovie.Models.ReviewItem;
-import app.com.tselebro.tmovie.Models.ReviewItem;
+import app.com.tselebro.tmovie.Models.TrailerItem;
 
 
 public final class MovieJsonUtils {
@@ -47,6 +47,7 @@ public final class MovieJsonUtils {
         final String MOVIE_ID = "id";
 
 
+
         JSONObject moviePostJson = new JSONObject(moviePosterJson);
 
         JSONArray moviePoster = moviePostJson.getJSONArray(MOVIE_LIST);
@@ -67,7 +68,6 @@ public final class MovieJsonUtils {
             String backDropPath = singlePoster.getString(BACKDROP_PATH);
 //           Get the user Rating
             int user_rating = singlePoster.getInt(USER_RATING);
-
             MovieItem movies = new MovieItem(movieId, posterPath, overview, releaseDate, backDropPath, title, user_rating);
             loadedMovies.add(movies);
         }
@@ -75,8 +75,8 @@ public final class MovieJsonUtils {
 
         }
 
-    public static  List<ReviewItem> getSimpleTrailerStringsFromJson (String trailerJson) throws JSONException{
-        List<ReviewItem> loadedTrailers = new ArrayList<>();
+    public static  List<TrailerItem> getSimpleTrailerStringsFromJson (String trailerJson) throws JSONException{
+        List<TrailerItem> loadedTrailers = new ArrayList<>();
 
         final String TRAILER_LIST = "results";
         final String TRAILE_ID = "id";
@@ -87,11 +87,11 @@ public final class MovieJsonUtils {
         JSONObject trailerObject = new JSONObject(trailerJson);
         JSONArray trailerArray = trailerObject.getJSONArray(TRAILER_LIST);
 
-        for (int i = 0; i <= trailerArray.length(); i ++ ){
+        for (int i = 0; i < trailerArray.length(); i ++ ){
             JSONObject trailers  =  trailerArray.getJSONObject(i);
 
 //           Get the id of the trailers
-            String reviewId = trailers.getString(TRAILE_ID);
+            String trailerId = trailers.getString(TRAILE_ID);
 //            get the youtube key for the trailer
             String key  = trailers.getString(TRAILER_KEY);
 //            get the name for the trailer
@@ -99,7 +99,7 @@ public final class MovieJsonUtils {
 //            get the type of trailers received
             String type = trailers.getString(TRAILER_TYPE);
 
-            ReviewItem trailer = new ReviewItem(reviewId, key, name, type);
+            TrailerItem trailer = new TrailerItem(trailerId, key, name, type);
             loadedTrailers.add(trailer);
 
         }
@@ -111,7 +111,7 @@ public final class MovieJsonUtils {
 
 
     public static  List<ReviewItem> getSimpleReviewStringsFromJson (String reviewJson) throws JSONException{
-        List<ReviewItem> loadedTrailers = new ArrayList<>();
+        List<ReviewItem> loadedReviews = new ArrayList<>();
 
         final String TRAILER_LIST = "results";
         final String REVIEW_ID = "id";
@@ -122,7 +122,7 @@ public final class MovieJsonUtils {
         JSONObject reviewObject = new JSONObject(reviewJson);
         JSONArray reviewArray = reviewObject.getJSONArray(TRAILER_LIST);
 
-        for (int i = 0; i <= reviewArray.length(); i ++ ){
+        for (int i = 0; i < reviewArray.length(); i ++ ){
             JSONObject reviews  =  reviewArray.getJSONObject(i);
 
 //           Get the id of the review
@@ -134,12 +134,12 @@ public final class MovieJsonUtils {
 //            get the url siting the addresso f the trailer
             String url = reviews.getString(REVIEW_URL);
 
-            ReviewItem trailer = new ReviewItem(reviewId, author, content,url);
-            loadedTrailers.add(trailer);
+            ReviewItem review = new ReviewItem(reviewId, author, content,url);
+            loadedReviews.add(review);
 
         }
 
-        return  loadedTrailers;
+        return  loadedReviews;
     }
 
 

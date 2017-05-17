@@ -3,10 +3,6 @@ package app.com.tselebro.tmovie.Models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-/**
- * Created by mathemandy on 5/13/17.
- */
-
 public class ReviewItem implements Parcelable
 {
 
