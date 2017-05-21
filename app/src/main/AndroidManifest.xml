@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.com.tselebro.tmovie">
+    package="app.ng.tselebro.tmovie">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -12,21 +14,27 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".MainActivity"
-            android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name="com.ng.tselebro.tmovie.MainActivity"
+            android:theme="@style/Base.Theme.AppCompat.Light.DarkActionBar"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MovieDetails"
-            android:parentActivityName=".MainActivity">
+        <activity android:name="com.ng.tselebro.tmovie.MovieDetails"
+            android:parentActivityName="com.ng.tselebro.tmovie.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity"
+                android:value="com.ng.tselebro.tmovie.MainActivity"
                 />
         </activity>
+        <provider
+            android:authorities="com.ng.tselebro.tmovie"
+            android:name="com.ng.tselebro.tmovie.data.MoviesProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

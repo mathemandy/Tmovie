@@ -18,8 +18,9 @@
 
 
     <array name="spinner_list_item_array">
-        <item>Popular</item>
-        <item>Top Rated</item>
+        <item>Popular Movie</item>
+        <item>Top Rated Movie</item>
+        <item>Favorite Movie</item>
     </array>
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -28,4 +29,8 @@
     <string name="demo_duration">Duration</string>
     <string name="demo_release_date">Release Date</string>
     <string name="MOVIE_KEY">movie</string>
+    <string name="demo_max_rating">/10</string>
+    <string name="sharedPreference_FirstRun">firstrun</string>
+    <string name="sharedPreferences_firstRun">firstrun</string>
+    <string name="content_description">Movie Poster</string>
 </resources>

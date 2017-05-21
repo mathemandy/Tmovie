@@ -5,7 +5,7 @@
 <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.com.tselebro.tmovie.MainActivity">
+    tools:context="app.ng.tselebro.tmovie.com.ng.tselebro.tmovie.MainActivity">
 
 
     <android.support.v7.widget.RecyclerView

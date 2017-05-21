@@ -10,7 +10,6 @@
     android:id="@+id/review_avatar_imageView"
     android:layout_width="40dp"
     android:layout_height="40dp"
-        android:layout_marginLeft="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
@@ -18,7 +17,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="16dp"
         app:layout_constraintVertical_bias="0.0"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0" />
 
@@ -26,25 +25,24 @@
         android:id="@+id/review_author_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-        tools:layout_editor_absoluteX="66dp"
         tools:text="Michael Faraday"
         app:layout_constraintTop_toTopOf="@+id/review_avatar_imageView"
-        android:layout_marginTop="0dp" />
+        android:layout_marginTop="0dp"
+        app:layout_constraintLeft_toRightOf="@+id/review_avatar_imageView"
+        android:layout_marginStart="8dp" />
 
     <TextView
         android:id="@+id/review_url_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="6dp"
-        android:text="TextView"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         app:layout_constraintLeft_toLeftOf="@+id/review_author_textView"
         app:layout_constraintTop_toBottomOf="@+id/review_author_textView"
         tools:text="@string/demo_url"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd    ="8dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.0" />
 
@@ -52,19 +50,16 @@
         android:id="@+id/review_content_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="7dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-condensed"
         android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="@+id/review_url_textview"
         app:layout_constraintLeft_toRightOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/review_url_textview"
-        app:layout_constraintVertical_bias="0.008"
         tools:text="@string/demo_content" />
 
 
